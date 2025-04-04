@@ -17,6 +17,10 @@ type Request struct {
 
 // NewRequest creates a new Request with the specified method, parameters, and ID
 func NewRequest(method string, params interface{}, id interface{}) (*Request, error) {
+	if method == "" {
+		return nil, StdError(ErrInvalidRequest)
+	}
+
 	var paramsJSON json.RawMessage
 	if params != nil {
 		data, err := json.Marshal(params)
